@@ -9,10 +9,6 @@ def alternating_merge(l1, l2):
     result = []
     i = 0
 
-    # Main interleaving phase.
-    # Loop invariant:
-    # result == [l1[0], l2[0], l1[1], l2[1], ..., l1[i-1], l2[i-1]]
-    # and 0 <= i <= min(n1, n2)
     while i < min(n1, n2):
         assert 0 <= i <= min(n1, n2), "Invariant failed: i out of valid range"
 
@@ -32,13 +28,12 @@ def alternating_merge(l1, l2):
             expected_prefix_after.append(l2[t])
         assert result == expected_prefix_after, "Invariant failed after update: prefix mismatch"
 
-    # Remaining suffix from the longer list (if lengths are unequal)
     if n1 > n2:
         result.extend(l1[i:])
     else:
         result.extend(l2[i:])
 
-    # Post-conditions
+    # bruh
     assert len(result) == n1 + n2, "Post-condition failed: output length mismatch"
 
     expected = []
