@@ -7,7 +7,6 @@ def reverse_chunk_order(a, k):
 
     original = a.copy()
 
-    # Chunk decomposition allows a final chunk with size < k when n is not divisible by k.
     chunks = [a[i:i + k] for i in range(0, n, k)]
     reversed_chunks = list(reversed(chunks))
 
@@ -15,9 +14,7 @@ def reverse_chunk_order(a, k):
     i = 0
     m = len(reversed_chunks)
 
-    # Loop invariant:
-    # result equals the concatenation of reversed_chunks[0:i],
-    # and each relocated chunk preserves its internal relative order.
+
     while i < m:
         expected_prefix = [x for ch in reversed_chunks[:i] for x in ch]
         assert result == expected_prefix, "Invariant failed: result prefix is incorrect"
@@ -31,14 +28,12 @@ def reverse_chunk_order(a, k):
         expected_prefix_after = [x for ch in reversed_chunks[:i] for x in ch]
         assert result == expected_prefix_after, "Invariant failed after update: prefix mismatch"
 
-    # Post-conditions
     expected = [x for ch in reversed_chunks for x in ch]
     assert result == expected, "Post-condition failed: chunk order not reversed correctly"
     assert len(result) == n, "Post-condition failed: length changed"
     assert sorted(result) == sorted(original), "Post-condition failed: elements changed"
 
-    # Strong post-condition: every chunk's internal order is preserved
-    # by construction because we only move whole slices without reordering them.
+   
     return result
 
 
